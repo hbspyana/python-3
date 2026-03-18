@@ -38,14 +38,16 @@ class Countdown:
     """
 
     def __init__(self, n: int) -> None:
-        raise NotImplementedError
+        self.n = n
 
     def __iter__(self) -> Iterator[int]:
-        raise NotImplementedError
+        current = self.n
+        while current >= 0:
+            yield current
+            current -= 1
 
     def __next__(self) -> int:
-        raise NotImplementedError
-
+        pass
 
 class StepIterator:
     """Problem 2. Step iterator.
@@ -62,14 +64,21 @@ class StepIterator:
     """
 
     def __init__(self, values: list[Any], step: int = 2) -> None:
-        raise NotImplementedError
+        if step <= 0:
+            raise ValueError
+        self.values = values
+        self.step = step
+        self.index = 0
 
     def __iter__(self) -> Iterator[Any]:
-        raise NotImplementedError
+        return self
 
     def __next__(self) -> Any:
-        raise NotImplementedError
-
+        if self.index >= len(self.values):
+            raise StopIteration
+        val = self.values[self.index]
+        self.index += self.step
+        return val
 
 class UniqueConsecutiveIterator:
     """Problem 3. Unique consecutive iterator.
@@ -82,14 +91,18 @@ class UniqueConsecutiveIterator:
     """
 
     def __init__(self, values: list[Any]) -> None:
-        raise NotImplementedError
+        self.values = values
 
     def __iter__(self) -> Iterator[Any]:
-        raise NotImplementedError
+        if self.values == []:
+            return None
+        yield self.values[0]
+        for i in range(1, len(self.values)):
+            if self.values[i - 1] != self.values[i]:
+                yield self.values[i]
 
     def __next__(self) -> Any:
-        raise NotImplementedError
-
+        pass
 
 class CircularIterator:
     """Problem 4. Circular iterator.
@@ -103,34 +116,44 @@ class CircularIterator:
     """
 
     def __init__(self, sequence: Sequence[Any], k: int) -> None:
-        raise NotImplementedError
+        if sequence == [] or k < 0:
+            raise ValueError
+        self.sequence = sequence
+        self.k = k
+        self.index = 0
+        self.count = 0
 
     def __iter__(self) -> Iterator[Any]:
-        raise NotImplementedError
+        return self
 
     def __next__(self) -> Any:
-        raise NotImplementedError
+        if self.count >= self.k:
+            raise StopIteration
+        
+        value = self.sequence[self.index % len(self.sequence)]
+        self.index += 1
+        self.count += 1
+        return value
 
+# class FlattenIterator:
+#     """Problem 5 (optional). Flatten iterator.
 
-class FlattenIterator:
-    """Problem 5 (optional). Flatten iterator.
+#     Build an iterator class that yields scalar values from nested lists
+#     of arbitrary depth.
 
-    Build an iterator class that yields scalar values from nested lists
-    of arbitrary depth.
+#     Example:
+#     >>> list(FlattenIterator([1, [2, 3], [4, [5, 6]], 7]))
+#     [1, 2, 3, 4, 5, 6, 7]
+#     """
 
-    Example:
-    >>> list(FlattenIterator([1, [2, 3], [4, [5, 6]], 7]))
-    [1, 2, 3, 4, 5, 6, 7]
-    """
+#     def __init__(self, data: list[Any]) -> None:
+#         raise NotImplementedError
 
-    def __init__(self, data: list[Any]) -> None:
-        raise NotImplementedError
+#     def __iter__(self) -> Iterator[Any]:
+#         raise NotImplementedError
 
-    def __iter__(self) -> Iterator[Any]:
-        raise NotImplementedError
-
-    def __next__(self) -> Any:
-        raise NotImplementedError
+#     def __next__(self) -> Any:
+#         raise NotImplementedError
 
 
 def read_words(filename: str) -> Iterator[str]:
@@ -143,8 +166,10 @@ def read_words(filename: str) -> Iterator[str]:
     >>> list(read_words("sample.txt"))
     ['one', 'two', 'three']
     """
-    raise NotImplementedError
-
+    with open(filename, "r") as f:
+        for line in f:
+            for word in line.strip().split():
+                yield word
 
 def batch(iterable: Iterable[Any], size: int) -> Iterator[list[Any]]:
     """Problem 7. Batch generator.
@@ -156,8 +181,9 @@ def batch(iterable: Iterable[Any], size: int) -> Iterator[list[Any]]:
     >>> list(batch([1, 2, 3, 4, 5, 6, 7], 3))
     [[1, 2, 3], [4, 5, 6], [7]]
     """
-    raise NotImplementedError
-
+    iterable = list(iterable)
+    for i in range(0,len(iterable),size):
+        yield list(iterable[i:i + size])
 
 def flatten(data: list[Any]) -> Iterator[Any]:
     """Problem 8 (optional). Recursive flatten generator.
@@ -168,8 +194,11 @@ def flatten(data: list[Any]) -> Iterator[Any]:
     >>> list(flatten([1, [2, 3], [4, [5, 6]], 7]))
     [1, 2, 3, 4, 5, 6, 7]
     """
-    raise NotImplementedError
-
+    if isinstance(data, list):
+        for i in data:
+            yield from flatten(i)
+    else:
+        yield data
 
 def log_calls(func: Callable[..., Any]) -> Callable[..., Any]:
     """Problem 9. `log_calls` decorator.
@@ -190,7 +219,7 @@ def log_calls(func: Callable[..., Any]) -> Callable[..., Any]:
     add(2, 3) -> 5
     5
     """
-    raise NotImplementedError
+    
 
 
 def measure_time(func: Callable[..., Any]) -> Callable[..., Any]:
