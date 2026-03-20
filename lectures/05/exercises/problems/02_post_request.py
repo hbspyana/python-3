@@ -21,7 +21,10 @@ def main() -> None:
     # TODO: create payload dict
     # TODO: send POST request with json=payload
     # TODO: print response details
-    pass
+    payload = {'title': 'test', 'body': 'abc', 'userId': 123}
+    response = requests.post(URL, json=payload)
+    data = response.json()
+    print(f'status code: {response.status_code} \nraw body: {response.text} \nparsed JSON: {data}')
 
 
 if __name__ == "__main__":
