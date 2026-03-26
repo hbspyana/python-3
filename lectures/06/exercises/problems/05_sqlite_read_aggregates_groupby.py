@@ -19,12 +19,20 @@ def main() -> None:
     cur = conn.cursor()
 
     # TODO: SELECT COUNT(*) FROM students
+    cur.execute('SELECT COUNT(*) FROM students')
+    print(cur.fetchone()[0])
 
     # TODO: SELECT AVG(age) FROM students
-
+    cur.execute('SELECT AVG(age) FROM students')
+    print(cur.fetchone()[0])
+    
     # TODO: SELECT MIN(age), MAX(age) FROM students
+    cur.execute('SELECT MIN(age),MAX(age) FROM students')
+    print(cur.fetchall()[0])
 
     # TODO: SELECT track, COUNT(*) FROM students GROUP BY track
+    cur.execute('SELECT track, COUNT(*) FROM students GROUP BY track')
+    print(cur.fetchall())
 
     conn.close()
 
