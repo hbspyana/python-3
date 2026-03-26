@@ -28,7 +28,11 @@ def main() -> None:
     cur = conn.cursor()
 
     # TODO: insert STUDENTS rows here.
+<<<<<<< HEAD
     cur.executemany("INSERT INTO students (name, age, email, track) VALUES (?, ?, ?, ?)", STUDENTS)
+=======
+    # cur.executemany("INSERT INTO students (name, age, email, track) VALUES (?, ?, ?, ?)", STUDENTS)
+>>>>>>> 406e75da68cc14f1e4753c60ed7fe0df8bfaaa74
 
     conn.commit()
     print("Inserted rows:", cur.rowcount)
