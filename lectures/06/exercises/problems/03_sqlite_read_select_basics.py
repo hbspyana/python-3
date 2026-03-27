@@ -17,7 +17,6 @@ def main() -> None:
     cur = conn.cursor()
 
     # TODO: SELECT * FROM students
-<<<<<<< HEAD
     cur.execute('SELECT * FROM students')
     rows = cur.fetchall()
     print('\n')
@@ -36,15 +35,6 @@ def main() -> None:
     one_row = cur.fetchone()
     print('\n')
     print(row)
-=======
-    # rows = cur.fetchall()
-
-    # TODO: SELECT name, email FROM students
-    # name_email_rows = cur.fetchall()
-
-    # TODO: SELECT one row for ana@example.com
-    # one_row = cur.fetchone()
->>>>>>> 406e75da68cc14f1e4753c60ed7fe0df8bfaaa74
 
     conn.close()
 

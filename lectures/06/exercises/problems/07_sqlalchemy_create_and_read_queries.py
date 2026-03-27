@@ -25,7 +25,6 @@ def main() -> None:
 
     with Session(engine) as session:
         # TODO 1: add an assignment for an existing student
-<<<<<<< HEAD
         student = session.execute(select(Student)).scalars().first()
         if student:
             new_assignment = Assignment(title="Math Homework", score=95, student_id=student.id)
@@ -50,14 +49,6 @@ def main() -> None:
         print("\nAssignments with student names:")
         for assignment, student in results:
             print(f"{assignment.title}, score {assignment.score}, student {student.name}")
-=======
-
-        # TODO 2: read all students
-
-        # TODO 3: read filtered + sorted students
-
-        # TODO 4: read assignments with student data
->>>>>>> 406e75da68cc14f1e4753c60ed7fe0df8bfaaa74
 
         session.commit()
 
